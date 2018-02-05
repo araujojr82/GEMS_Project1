@@ -1,17 +1,17 @@
 #include <string>
 
-#include "cVector.h"
+#include "cList.h"
 #include "cPerson.h"
 
-std::string getRandomString( cList< std::string > theVectorOfStrings )
+std::string getRandomString( cList< std::string > theListOfStrings )
 {
 
-	int size = theVectorOfStrings.size();
+	int size = theListOfStrings.size();
 	std::string theRandomString;
 
 	int randomPosition = rand() % size;
 
-	theRandomString = theVectorOfStrings.get( randomPosition );
+	theRandomString = theListOfStrings.get( randomPosition );
 
 	return theRandomString;
 }

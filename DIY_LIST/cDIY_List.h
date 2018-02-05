@@ -15,7 +15,7 @@ public:
 	
 	cSorter mySorter;
 	
-	cList<sPerson*> theVector;
+	cList<sPerson*> theList;
 
 	cList< std::string > listFemaleNames;
 	cList< std::string > listMaleNames;

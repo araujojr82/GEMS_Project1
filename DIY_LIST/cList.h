@@ -36,14 +36,15 @@ public:
 
 	cList( )
 	{
-		this->pFirst = NULL;	// 0 or nullptr
-		this->pCurrent = NULL;	// just in case...
+		this->pFirst = NULL;
+		this->pLast  = NULL;
+		this->pCurrent = NULL;
 
-		this->size = 0;
+		this->mySize = 0;
 		return;
-	};
+	}
 
-	~cList(){};
+	~cList(){}
 
 	// Clear the cList and start a new one with the same capacity
 	void clear()
@@ -52,20 +53,30 @@ public:
 		//delete[] this->myData;	// Delete the old vector data
 		//this->myData = new Type[this->myCapacity];
 		//return;
-	}
+	};
 
 	// Insert the 'value' at the end of the cList
 	void push_back( Type value ) // same as push_back(value);
 	{
-		//if( this->myIndex >= this->myCapacity )
-		//{	// Vector is Full
-		//	// Double its capacity 			
-		//	this->resize( this->myCapacity * 2 );
-		//	this->myCapacity *= 2;
-		//}
+		cNode* pNewNode = new cNode();
 
-		//this->myData[this->myIndex] = value;
-		//this->myIndex++;
+		pNewNode->value = value;
+				
+		if( this->mySize == 0 )			    // | First | Current | Last | 
+		{ // The list is empty				// |  NULL |   NULL  | NULL |
+			this->pFirst = pNewNode;		// |  New  |   NULL  | NULL |
+			this->pCurrent = pNewNode;		// |  New  |   New   | NULL |
+			this->pLast = pNewNode;			// |  New  |   New   | New  |
+		}
+		else
+		{
+			this->moveToLast();
+			pNewNode->pPrev = this->pCurrent;
+			this->pLast = pNewNode;
+			this->pCurrent->pNext = this->pLast;
+			this->pCurrent = this->pLast;
+		}
+		this->mySize++;
 
 		return;
 	}
@@ -76,10 +87,8 @@ public:
 		cNode* pNewNode = new cNode();
 
 		pNewNode->value = value;
-		
-		this->size++;
-											
-		if( this->pFirst == NULL )			// | First | Current | Last | 
+													
+		if( this->mySize == 0 )			    // | First | Current | Last | 
 		{ // The list is empty				// |  NULL |   NULL  | NULL |
 			this->pFirst   = pNewNode;		// |  New  |   NULL  | NULL |
 			this->pCurrent = pNewNode;		// |  New  |   New   | NULL |
@@ -97,8 +106,16 @@ public:
 			}
 			this->pCurrent = pNewNode;				// Finally, update the current node to be the new
 		}
+		this->mySize++;
 		 
 		return;
+	}
+
+	// Delete the value at the 'index' position
+	void erase( unsigned int index )
+	{
+		this->moveTo( index );
+		this->erase();
 	}
 
 	// Delete the value at the CURRENT position
@@ -110,6 +127,8 @@ public:
 		}
 		else
 		{
+			this->mySize--;
+
 			// Find the next and prev pointers for the current node
 			cNode* pThePrev = this->pCurrent->pPrev;
 			cNode* pTheNext = this->pCurrent->pNext;
@@ -136,91 +155,69 @@ public:
 		}
 	}
 
-	// Delete the value at the 'index' position
-	void erase( unsigned int index )
-	{
-
-	}
-
 	// Set 'value' at the position 'index' of the cList
 	void set( unsigned int index, Type value ) // same as vector[index] = value
 	{
-		//if( index <= this->myCapacity )
-		//{
-		//	this->myData[index] = value;
-		//}
+		this->moveTo( index );
+		this->pCurrent->value = value;
 		return;
 	}
 
 	// Returns the value at the position 'index' of the cList
 	Type get( unsigned int index )	// same as return vector[index]
 	{
-		//return this->myData[index];
-		return NULL;
+		this->moveTo( index );
+		return this->pCurrent->value;
+	}
+
+	void moveTo( unsigned int index )
+	{
+		this->moveToFirst();
+		for( int i = 0; i <= index; i++ )
+		{
+			this->moveToNext();
+		}
 	}
 
 	void moveToPrev( void )
 	{
+		if( this->pCurrent != this->pFirst )		// Don't move if it is the first 
+		{	
+			this->pCurrent = this->pCurrent->pPrev;
+		}		
 		return;
 	}
 
 	void moveToNext( void )
 	{
+		if( this->pCurrent != this->pLast )			// Don't move if it is the last 
+		{
+			this->pCurrent = this->pCurrent->pNext;
+		}
 		return;
 	}
 
 	void moveToFirst( void )
 	{
+		this->pCurrent = this->pFirst;
 		return;
 	}
 
 	void moveToLast( void )
 	{
-
+		this->pCurrent = this->pLast;
 		return;
 	}
-
 
 	// Returns the current size of the cList
 	unsigned int size( void )		//same as size()
 	{
 		return this->mySize;
 	}
-	
-	// Returns the current capacity of the cList
-	unsigned int capacity( void )	// same as capacity()
-	{
-		//return this->myCapacity;
-		return 0;
-	}
 
 private:
 
 	unsigned int mySize;
-
-	//Type* myData;
-
-	//unsigned int myIndex;
-	//unsigned int myCapacity;
-
-	//void resize( unsigned int newCapacity )
-	//{
-	//	Type* pTemVector = new Type[newCapacity];
-
-	//	// Copy the current data to the larger temp Vector
-	//	for( int index = 0; index != this->myCapacity; index++ )
-	//	{
-	//		pTemVector[index] = this->myData[index];
-	//	}
-
-	//	// Delete the old vector data
-	//	delete[] this->myData;
-
-	//	// The Vector Data will now be the tempVector
-	//	this->myData = pTemVector;
-
-	//	return;
-	//}
 
 };
 
