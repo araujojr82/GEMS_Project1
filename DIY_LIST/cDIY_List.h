@@ -1,5 +1,5 @@
-#ifndef _cDIY_Vector_HG_
-#define _cDIY_Vector_HG_
+#ifndef _cDIY_List_HG_
+#define _cDIY_List_HG_
 
 #include <fstream>
 #include <vector>
@@ -7,22 +7,22 @@
 
 #include "iPersonMotron.h"
 #include "cSorter.h"		//	<-- Functor 
-#include "cVector.h"
+#include "cList.h"
 
-class cDIY_Vector : iPersonMotron
+class cDIY_List : iPersonMotron
 {
 public:
 	
 	cSorter mySorter;
 	
-	cVector<sPerson*> theVector;
+	cList<sPerson*> theVector;
 
-	cVector< std::string > vecFemaleNames;
-	cVector< std::string > vecMaleNames;
-	cVector< std::string > vecLastNames;
+	cList< std::string > listFemaleNames;
+	cList< std::string > listMaleNames;
+	cList< std::string > listLastNames;
 
-	cDIY_Vector();
-	~cDIY_Vector();
+	cDIY_List();
+	~cDIY_List();
 
 	bool LoadDataFilesIntoContainer( std::string firstNameFemaleFileName,
 		std::string firstNameMaleFileName,

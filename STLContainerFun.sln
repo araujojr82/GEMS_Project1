@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "STD_MAP", "STD_MAP\STD_MAP.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DIY_VECTOR", "DIY_VECTOR\DIY_VECTOR.vcxproj", "{E0404C81-F242-4256-9335-4E47E98D0BC5}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DIY_LIST", "DIY_LIST\DIY_LIST.vcxproj", "{B1390025-1CFF-4CA7-8B9E-E1CC2C88AB0F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -61,6 +63,14 @@ Global
 		{E0404C81-F242-4256-9335-4E47E98D0BC5}.Release|x64.Build.0 = Release|x64
 		{E0404C81-F242-4256-9335-4E47E98D0BC5}.Release|x86.ActiveCfg = Release|Win32
 		{E0404C81-F242-4256-9335-4E47E98D0BC5}.Release|x86.Build.0 = Release|Win32
+		{B1390025-1CFF-4CA7-8B9E-E1CC2C88AB0F}.Debug|x64.ActiveCfg = Debug|x64
+		{B1390025-1CFF-4CA7-8B9E-E1CC2C88AB0F}.Debug|x64.Build.0 = Debug|x64
+		{B1390025-1CFF-4CA7-8B9E-E1CC2C88AB0F}.Debug|x86.ActiveCfg = Debug|Win32
+		{B1390025-1CFF-4CA7-8B9E-E1CC2C88AB0F}.Debug|x86.Build.0 = Debug|Win32
+		{B1390025-1CFF-4CA7-8B9E-E1CC2C88AB0F}.Release|x64.ActiveCfg = Release|x64
+		{B1390025-1CFF-4CA7-8B9E-E1CC2C88AB0F}.Release|x64.Build.0 = Release|x64
+		{B1390025-1CFF-4CA7-8B9E-E1CC2C88AB0F}.Release|x86.ActiveCfg = Release|Win32
+		{B1390025-1CFF-4CA7-8B9E-E1CC2C88AB0F}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
