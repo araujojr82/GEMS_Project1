@@ -61,18 +61,17 @@ int main( int argc, char* argv[] )
 	std::vector<sPerson> resultVector;
 
 	// -------------TESTING SORT BEGIN-------------
-	sPerson personToFind;
-	theDIYVector->FindPeopleByName( resultVector, personToFind, theDIYVector->theVector.size() );
-
-	theDIYVector->SortPeople( resultVector, iPersonMotron::DESC_BY_ID );
-	printVector( resultVector );
-	std::cout << std::endl;
+	//std::cout << "DESC_BY_ID" << std::endl;
+	//theDIYVector->SortPeople( resultVector, iPersonMotron::DESC_BY_ID );
+	//printVector( resultVector );
+	//std::cout << std::endl;
 
 	//std::cout << "ASC_FIRST_THEN_LAST" << std::endl;
 	//theDIYVector->SortPeople( resultVector, iPersonMotron::ASC_FIRST_THEN_LAST );
 	//printVector( resultVector );
 	//std::cout << std::endl;
-	
+	//
+	//std::cout << "DESC_FIRST_THEN_LAST" << std::endl;
 	//theDIYVector->SortPeople( resultVector, iPersonMotron::DESC_FIRST_THEN_LAST );
 	//printVector( resultVector );
 	//std::cout << std::endl;
@@ -82,6 +81,7 @@ int main( int argc, char* argv[] )
 	//printVector( resultVector );
 	//std::cout << std::endl;
 
+	//std::cout << "DESC_LAST_THEN_FIRST" << std::endl;
 	//theDIYVector->SortPeople( resultVector, iPersonMotron::DESC_LAST_THEN_FIRST );
 	//printVector( resultVector );
 	//std::cout << std::endl;
@@ -91,13 +91,13 @@ int main( int argc, char* argv[] )
 	//printVector( resultVector );
 	//std::cout << std::endl;
 
-	//std::cout << "ASC_BY_HEALTH" << std::endl;
+	//std::cout << "DESC_BY_HEALTH" << std::endl;
 	//theDIYVector->SortPeople( resultVector, iPersonMotron::DESC_BY_HEALTH );
 	//printVector( resultVector );
 	//std::cout << std::endl;
 
-	//std::cout << "DESC_BY_ID" << std::endl;
-	//theDIYVector->SortPeople( resultVector, iPersonMotron::DESC_BY_ID );
+	//std::cout << "ASC_BY_ID" << std::endl;
+	//theDIYVector->SortPeople( resultVector, iPersonMotron::ASC_BY_ID );
 	//printVector( resultVector );
 	//std::cout << std::endl;
 	// -------------TESTING SORT END-------------
@@ -166,7 +166,6 @@ int main( int argc, char* argv[] )
 	//std::cout << "Number of People in that range with that health: " << resultVector.size() << std::endl;
 	//printVector( resultVector );
 	//resultVector.clear();
-
 	// -------------TESTING FIND BY POSITION/HEALTH END-------------
 	return 0;
 }
