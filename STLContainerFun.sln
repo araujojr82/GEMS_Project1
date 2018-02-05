@@ -15,6 +15,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DIY_VECTOR", "DIY_VECTOR\DI
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DIY_LIST", "DIY_LIST\DIY_LIST.vcxproj", "{B1390025-1CFF-4CA7-8B9E-E1CC2C88AB0F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DIY_MAP", "DIY_MAP\DIY_MAP.vcxproj", "{4EBC75D5-846A-41E1-977F-2BBFAC4580C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -71,6 +73,14 @@ Global
 		{B1390025-1CFF-4CA7-8B9E-E1CC2C88AB0F}.Release|x64.Build.0 = Release|x64
 		{B1390025-1CFF-4CA7-8B9E-E1CC2C88AB0F}.Release|x86.ActiveCfg = Release|Win32
 		{B1390025-1CFF-4CA7-8B9E-E1CC2C88AB0F}.Release|x86.Build.0 = Release|Win32
+		{4EBC75D5-846A-41E1-977F-2BBFAC4580C6}.Debug|x64.ActiveCfg = Debug|x64
+		{4EBC75D5-846A-41E1-977F-2BBFAC4580C6}.Debug|x64.Build.0 = Debug|x64
+		{4EBC75D5-846A-41E1-977F-2BBFAC4580C6}.Debug|x86.ActiveCfg = Debug|Win32
+		{4EBC75D5-846A-41E1-977F-2BBFAC4580C6}.Debug|x86.Build.0 = Debug|Win32
+		{4EBC75D5-846A-41E1-977F-2BBFAC4580C6}.Release|x64.ActiveCfg = Release|x64
+		{4EBC75D5-846A-41E1-977F-2BBFAC4580C6}.Release|x64.Build.0 = Release|x64
+		{4EBC75D5-846A-41E1-977F-2BBFAC4580C6}.Release|x86.ActiveCfg = Release|Win32
+		{4EBC75D5-846A-41E1-977F-2BBFAC4580C6}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
