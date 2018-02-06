@@ -9,18 +9,18 @@ std::string getRandomString( cMap< std::string > theMapOfStrings )
 
 	int size = theMapOfStrings.size();
 	std::string theRandomString;
-	cList< std::string > tempList;
+	cList< std::string >* tempList;
 
 	bool found = false;
 
 	while( !found )
 	{
 		int randomPosition = rand() % size;
-		tempList = theMapOfStrings.get( std::to_string( randomPosition ) );
-		if( tempList.size() != 0 )	// Check if there's data at the cList
+		tempList = &theMapOfStrings.get( std::to_string( randomPosition ) );
+		if( tempList->size() != 0 )	// Check if there's data at the cList
 		{
-			randomPosition = rand() % tempList.size();
-			theRandomString = tempList.get( randomPosition );
+			randomPosition = rand() % tempList->size();
+			theRandomString = tempList->get( randomPosition );
 			found = true;
 		}
 	}

@@ -3,7 +3,7 @@
 
 #include "../DIY_LIST/cList.h"
 
-#define INITIAL_SIZE 200;
+#define INITIAL_SIZE 300;
 
 //•	STL usually implements as a "red-black tree". Suggestion is to use a "hash map"
 //•	Insert, delete, lookup: O( log n ) time
@@ -20,7 +20,15 @@ public:
 	{
 		this->mySize = 0;
 		this->myCapacity = INITIAL_SIZE;
+		
 		this->myData = new cList<Type>[this->myCapacity];
+		//this->myData = new cList<Type>*[this->myCapacity];
+
+		//for( int i = 0; i != this->myCapacity; i++ )
+		//{
+		//	cList<Type>* tempList = new cList<Type>;
+		//	this->myData[i] = tempList;
+		//}		
 
 		return;
 	}
@@ -40,16 +48,19 @@ public:
 		// Generate the hash for the given hash string 
 		unsigned int theHash = this->getHash( hashBy );
 
+		//cList<Type>* tempList = this->myData[theHash];
+
 		//// Check if the cList at this hash position exists		
-		//if( this->myData[theHash].size() == 0)
+		////if( tempList->isValid )
+		//if( this->myData[theHash]->isValid )
 		//{	// Nothing stored in this position yet			
-		//	cList< Type > newList;
-		//	newList.push_back( value );
+		//	cList< Type >* newList = new cList< Type >;
+		//	newList->push_back( value );
 		//	this->myData[theHash] = newList;			
 		//}
 		//else
 		//{	// There's already a cList at this position
-		//	this->myData[theHash].push_back( value );
+		//	this->myData[theHash]->push_back( value );
 		//}
 		// Actually dont check anything
 		this->myData[theHash].push_back( value );
@@ -72,12 +83,21 @@ public:
 		return this->myData[index];
 	}
 
+	// Returns the value at the position (hashed string) of the cMap
 	cList<Type> get( std::string hashBy )	// same as return vector[index]
 	{
 		// Generate the hash for the given hash string 
 		unsigned int theHash = this->getHash( hashBy );
 
 		return this->myData[theHash];
+	}
+
+	// Set the value of a position to the new value
+	void set( int index, cList<Type> value )	// same as return vector[index]
+	{
+		this->myData[index] = value;
+
+		return;
 	}
 
 	// Returns the current size of the cMap
@@ -98,16 +118,44 @@ private:
 	{
 		// Take ASCII value for each letter and add them up!
 		unsigned int theHash = 0;
+		std::string theHashString;
 
-		for( int index = 0; index != strToBeHashed.size(); index++ )
+		int char0Value = ( unsigned int )strToBeHashed[0];
+		int char1Value;
+
+		std::string char0String;
+		std::string char1String;
+		std::string char2String;
+
+		// Check for the fisrt char of the string
+		if( char0Value > 64 )						// It's a String
 		{
-			char curChar = strToBeHashed[index];
+			char0Value -= 64;
+			char1Value = ( unsigned int )strToBeHashed[1] - 64;
 
-			theHash += ( unsigned int )curChar;
+			char0String = std::to_string( char0Value );
+			char1String = std::to_string( char1Value );
+
+			if( char1String.size() == 1 )		// if the second char value is less than 10
+			{									// add a 0 in front of it
+				char1String = "0" + char1String;
+			}
+			theHashString = char0String + char1String;
+
+			theHash = stoi( theHashString ) / 10;
 		}
+		else										// It's a number
+		{
+			for( int index = 0; index != strToBeHashed.size(); index++ )
+			{
+				if( index == 3 ) break;	// Just the first 3
 
-		// 2. divide hash by size of the array
-		theHash = theHash % INITIAL_SIZE;
+				if( strToBeHashed[index] != '.' )
+				theHashString += strToBeHashed[index];
+			}
+			theHash = stoi( theHashString );
+		}
+		
 
 		return theHash;
 	}

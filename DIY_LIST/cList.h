@@ -33,13 +33,14 @@ public:
 	cNode* pFirst;		// First Node of the List
 	cNode* pLast;		// The Last Node of the List
 	cNode* pCurrent;	// Current node
+	bool isValid;
 
 	cList( )
 	{
 		this->pFirst = NULL;
 		this->pLast  = NULL;
 		this->pCurrent = NULL;
-
+		this->isValid = true;
 		this->mySize = 0;
 		return;
 	}
