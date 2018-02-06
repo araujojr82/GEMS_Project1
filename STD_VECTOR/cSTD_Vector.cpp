@@ -118,7 +118,7 @@ bool cSTD_Vector::GenerateRandomPeople( int numberOfPeople )
 		this->theVector.push_back( newPerson );
 	}
 
-	return false;
+	return true;
 }
 
 // Returns only people with this name 

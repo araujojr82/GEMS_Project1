@@ -4,6 +4,7 @@ cHashMap::cHashMap()
 {
 	this->m_ArraySize = cHashMap::INITALARRAYSIZE;
 
+	//sWizard* pWizards;
 	this->pWizards = new sWizard[this->m_ArraySize];
 
 	return;

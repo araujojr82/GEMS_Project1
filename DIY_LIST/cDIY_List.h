@@ -55,6 +55,7 @@ public:
 	eContainerType getContainerType( void );
 
 	int getPersonID();
+	bool sortList( eSortType sortType );
 
 private:
 	static int uniqueID;

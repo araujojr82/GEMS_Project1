@@ -118,7 +118,7 @@ bool cSTD_List::GenerateRandomPeople( int numberOfPeople )
 		this->theList.push_back( newPerson );
 	}
 
-	return false;
+	return true;
 }
 
 // Returns only people with this name 

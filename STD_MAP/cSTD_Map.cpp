@@ -128,7 +128,7 @@ bool cSTD_Map::GenerateRandomPeople( int numberOfPeople )
 		this->theMap[newPerson->uniqueID] =  newPerson;
 	}
 
-	return false;
+	return true;
 }
 
 // Returns only people with this name 

@@ -1,5 +1,6 @@
 #include <string>
 
+#include "../DIY_LIST/cList.h"
 #include "cMap.h"
 #include "cPerson.h"
 
@@ -8,11 +9,21 @@ std::string getRandomString( cMap< std::string > theMapOfStrings )
 
 	int size = theMapOfStrings.size();
 	std::string theRandomString;
+	cList< std::string > tempList;
 
-	int randomPosition = rand() % size;
+	bool found = false;
 
-	theRandomString = theMapOfStrings.get( randomPosition );
-
+	while( !found )
+	{
+		int randomPosition = rand() % size;
+		tempList = theMapOfStrings.get( std::to_string( randomPosition ) );
+		if( tempList.size() != 0 )	// Check if there's data at the cList
+		{
+			randomPosition = rand() % tempList.size();
+			theRandomString = tempList.get( randomPosition );
+			found = true;
+		}
+	}
 	return theRandomString;
 }
 
