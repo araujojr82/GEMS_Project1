@@ -6,8 +6,7 @@
 
 std::string getRandomString( cMap< std::string > theMapOfStrings )
 {
-
-	int size = theMapOfStrings.size();
+	int size = theMapOfStrings.size();	
 	std::string theRandomString;
 	cList< std::string >* tempList;
 

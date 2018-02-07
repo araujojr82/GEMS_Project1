@@ -16,16 +16,15 @@ public:
 	cSorter mySorter;
 	
 	//cMap<sPerson*> theMap;
-	cMap<sPerson*> theMapByFirst;	//ASC_FIRST_THEN_LAST
-	cMap<sPerson*> theMapByLast;	//ASC_LAST_THEN_FIRST
-	cMap<sPerson*> theMapByID;		//ASC_BY_ID
-	cMap<sPerson*> theMapByHealth;	//ASC_BY_HEALTH
-	
 	// Basically it will store multiple maps, one for each key type
 	// First Name, Last Name, UniqueID and Health will have their own map
 	// This way there's no need for sorting the map itself, just the elements
 	// in the cList of each position
-	//cMap< cMap< sPerson* >* > theMap;	// Inception feelings
+	cMap<sPerson*> theMapByFirst;	//ASC_FIRST_THEN_LAST
+	cMap<sPerson*> theMapByLast;	//ASC_LAST_THEN_FIRST
+	cMap<sPerson*> theMapByID;		//ASC_BY_ID
+	cMap<sPerson*> theMapByHealth;	//ASC_BY_HEALTH
+
 
 	cMap< std::string > mapFemaleNames;
 	cMap< std::string > mapMaleNames;

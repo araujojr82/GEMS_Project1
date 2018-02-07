@@ -40,7 +40,7 @@ public:
 		this->pFirst = NULL;
 		this->pLast  = NULL;
 		this->pCurrent = NULL;
-		this->isValid = true;
+		this->isValid = false;
 		this->mySize = 0;
 		return;
 	}

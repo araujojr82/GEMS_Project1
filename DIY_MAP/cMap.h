@@ -1,6 +1,8 @@
 #ifndef _cMap_HG_
 #define _cMap_HG_
 
+#include <iostream>
+
 #include "../DIY_LIST/cList.h"
 
 #define INITIAL_SIZE 300;
@@ -16,19 +18,16 @@ class cMap
 {
 public:
 
-	cMap( )
+	//cMap( int capacity ) : 
+	//	this->mySize( 0 ),
+	//	this->myCapacity( capacity ),
+	//	this->myData( new cList<Type>[this->myCapacity] ) {}
+
+	cMap()
 	{
 		this->mySize = 0;
-		this->myCapacity = INITIAL_SIZE;
-		
+		this->myCapacity = INITIAL_SIZE;		
 		this->myData = new cList<Type>[this->myCapacity];
-		//this->myData = new cList<Type>*[this->myCapacity];
-
-		//for( int i = 0; i != this->myCapacity; i++ )
-		//{
-		//	cList<Type>* tempList = new cList<Type>;
-		//	this->myData[i] = tempList;
-		//}		
 
 		return;
 	}
@@ -47,23 +46,15 @@ public:
 	{
 		// Generate the hash for the given hash string 
 		unsigned int theHash = this->getHash( hashBy );
+		
+		if( theHash >= this->myCapacity )
+		{
+			this->resize( this->myCapacity * 2 );
+			this->myCapacity *= 2;
+		}
 
-		//cList<Type>* tempList = this->myData[theHash];
-
-		//// Check if the cList at this hash position exists		
-		////if( tempList->isValid )
-		//if( this->myData[theHash]->isValid )
-		//{	// Nothing stored in this position yet			
-		//	cList< Type >* newList = new cList< Type >;
-		//	newList->push_back( value );
-		//	this->myData[theHash] = newList;			
-		//}
-		//else
-		//{	// There's already a cList at this position
-		//	this->myData[theHash]->push_back( value );
-		//}
-		// Actually dont check anything
 		this->myData[theHash].push_back( value );
+		this->myData[theHash].isValid = true;
 		this->mySize++;
 		 
 		return;
@@ -148,22 +139,34 @@ private:
 		{
 			for( int index = 0; index != strToBeHashed.size(); index++ )
 			{
-				if( index == 3 ) break;	// Just the first 3
-
-				if( strToBeHashed[index] != '.' )
+				if( strToBeHashed[index] == '.' ) break; // Stop if it reaches '.'
 				theHashString += strToBeHashed[index];
 			}
 			theHash = stoi( theHashString );
-		}
-		
+		}		
 
 		return theHash;
 	}
-
-	//bool m_getWizAt( unsigned int index );
-
 	
-	
+	void resize( unsigned int newCapacity )
+	{
+		// Make a new map with the new capacity
+		cList<Type>* tempMap = new cList<Type>[newCapacity];
+
+		// Copy the current data to the larger temp Map
+		for( int index = 0; index != this->myCapacity; index++ )
+		{
+			tempMap[index] = this->myData[index];
+		}
+		
+		// Delete the old vector data
+		delete[] this->myData;
+
+		// The Vector Data will now be the tempVector
+		this->myData = tempMap;
+
+		return;
+	}	
 
 };
 
