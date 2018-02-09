@@ -104,6 +104,15 @@ int cSTD_Vector::getPersonID()
 // Unique IDs must be unique								 
 bool cSTD_Vector::GenerateRandomPeople( int numberOfPeople )
 {
+	time_t curTime;
+	time( &curTime );
+	std::cout << "Time Begin: " << ( size_t )curTime << std::endl;
+
+	PROCESS_MEMORY_COUNTERS info;
+	GetProcessMemoryInfo( GetCurrentProcess(), &info, sizeof( info ) );
+
+	std::cout << "Memory Begin: " << ( size_t )info.PeakWorkingSetSize << std::endl;
+
 
 	for( int i = 0; i != numberOfPeople; i++ )
 	{
@@ -117,6 +126,17 @@ bool cSTD_Vector::GenerateRandomPeople( int numberOfPeople )
 
 		this->theVector.push_back( newPerson );
 	}
+
+	time_t curTime2;
+	time( &curTime2 );
+	std::cout << "Time Begin: " << ( size_t )curTime2 << std::endl;
+	std::cout << "Time Spent: " << ( size_t )(curTime2 - curTime) << std::endl;
+
+	PROCESS_MEMORY_COUNTERS info_end;
+	GetProcessMemoryInfo( GetCurrentProcess(), &info_end, sizeof( info_end ) );
+
+	std::cout << "Memory End: " << ( size_t )info_end.PeakWorkingSetSize << std::endl;
+	std::cout << "Memory Used: " << ( ( size_t )info_end.PeakWorkingSetSize - ( size_t )info.PeakWorkingSetSize ) << std::endl;
 
 	return true;
 }

@@ -5,6 +5,9 @@
 #include <vector>
 #include <time.h>
 #include <algorithm>
+#include "windows.h"
+#include "psapi.h"
+#include <iostream>
 
 #include "iPersonMotron.h"
 #include "cSorter.h"		//	<-- Functor 
