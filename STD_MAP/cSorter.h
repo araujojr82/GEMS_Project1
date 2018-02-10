@@ -135,7 +135,7 @@ public:
 				break;
 			}
 		}
-		theMap.erase( thePerson->uniqueID );	// Remove the entry found
+		theMap.erase( ( int )thePerson->uniqueID );	// Remove the entry found
 		return thePerson;
 	}
 };

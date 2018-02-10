@@ -174,7 +174,7 @@ public:
 	void moveTo( unsigned int index )
 	{
 		this->moveToFirst();
-		for( int i = 0; i <= index; i++ )
+		for( int i = 0; i != index; i++ )
 		{
 			this->moveToNext();
 		}

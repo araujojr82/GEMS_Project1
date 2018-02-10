@@ -3,17 +3,14 @@
 
 #include <fstream>
 #include <vector>
-#include <time.h>
 #include <algorithm>
-#include "windows.h"
-#include "psapi.h"
-#include <iostream>
+#include <windows.h>
+#include <psapi.h>
+#include <numeric>
+#include <chrono>
 
 #include "iPersonMotron.h"
 #include "cSorter.h"		//	<-- Functor 
-
-#include <numeric>
-#include <chrono>
 
 class cSTD_Vector : iPersonMotron
 {

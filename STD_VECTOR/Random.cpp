@@ -1,14 +1,31 @@
 #include <string>
 #include <vector>
+#include <chrono>
+#include <random>
 #include "cPerson.h"
+
+int getRandomNumber( int min, int max )
+{
+	int output;	
+
+	unsigned seed = ( unsigned int )std::chrono::system_clock::now().time_since_epoch().count();
+
+	std::default_random_engine generator( seed );
+	std::uniform_real_distribution<float> distribution( ( float )min, ( float )max );
+
+	output = 0;
+
+	output = ( int )distribution( generator );
+	return output;
+}
 
 std::string getRandomString( std::vector< std::string > theVectorOfStrings )
 {
 
-	int size = theVectorOfStrings.size();
+	int size = ( int )theVectorOfStrings.size();
 	std::string theRandomString;
 
-	int randomPosition = rand() % size;
+	int randomPosition = getRandomNumber( 0, size - 1 );
 
 	theRandomString = theVectorOfStrings[randomPosition];
 
@@ -19,7 +36,7 @@ std::string getRandomFirstName( std::vector< std::string > maleNames, std::vecto
 {
 	std::string firstName;
 
-	int gender = rand() % 2; // 0 = female, 1 = male
+	int gender = getRandomNumber( 0, 1 );		// 0 = female, 1 = male
 	if( gender == 1 )
 		firstName = getRandomString( maleNames );
 	else
@@ -36,13 +53,13 @@ std::string getRandomLastName( std::vector< std::string > lastNames )
 
 int getRandomAge()
 {
-	int age = rand() % 100 + 1;
+	int age = getRandomNumber( 1, 100 );
 	return age;
 }
 
 float getRandomHealth()
 {
-	float health = rand() % 1000 + 1;
+	float health = ( float )getRandomNumber( 1, 1000 );
 	health = health / 10;
 	return health;
 }
@@ -50,8 +67,8 @@ float getRandomHealth()
 sPoint getRandomLocation()
 {
 	sPoint location;
-	location.x = rand() % 100;
-	location.y = rand() % 100;
-	location.z = rand() % 100;
+	location.x = ( float )getRandomNumber( 1, 100 );
+	location.y = ( float )getRandomNumber( 1, 100 );
+	location.z = ( float )getRandomNumber( 1, 100 );
 	return location;
 }

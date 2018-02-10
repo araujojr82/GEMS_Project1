@@ -3,14 +3,15 @@
 
 #include <fstream>
 #include <vector>
-//#include <list>
 #include <map>
-#include <time.h>
 #include <algorithm>
+#include <windows.h>
+#include <psapi.h>
+#include <numeric>
+#include <chrono>
 
 #include "iPersonMotron.h"
 #include "cSorter.h"		//	<-- Functor 
-
 
 class cSTD_Map : iPersonMotron
 {
@@ -56,11 +57,18 @@ public:
 	// Returns the enum from the cPerson.h file
 	eContainerType getContainerType( void );
 
+	void startPerformanceData( void );
+	void stopPerformanceData( void );
+
 	int getPersonID();
 
 private:
 	static int uniqueID;
 	eContainerType type;
+
+	sPerfData theCallStats;
+	std::chrono::system_clock::time_point start;
+	bool b_runPerformanceData = true;
 };
 
 #endif

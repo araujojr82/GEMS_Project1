@@ -3,7 +3,10 @@
 
 #include <fstream>
 #include <vector>
-#include <time.h>
+#include <windows.h>
+#include <psapi.h>
+#include <numeric>
+#include <chrono>
 
 #include "iPersonMotron.h"
 #include "cSorter.h"		//	<-- Functor 
@@ -12,10 +15,9 @@
 class cDIY_Map : iPersonMotron
 {
 public:
-	
+
 	cSorter mySorter;
-	
-	//cMap<sPerson*> theMap;
+
 	// Basically it will store multiple maps, one for each key type
 	// First Name, Last Name, UniqueID and Health will have their own map
 	// This way there's no need for sorting the map itself, just the elements
@@ -36,7 +38,7 @@ public:
 	bool LoadDataFilesIntoContainer( std::string firstNameFemaleFileName,
 		std::string firstNameMaleFileName,
 		std::string lastNameFileName );
-						 
+
 	bool GenerateRandomPeople( int numberOfPeople );
 
 	bool FindPeopleByName( std::vector<sPerson> &vecPeople, sPerson personToMatch, int maxNumberOfPeople = INT_MAX );
@@ -63,11 +65,18 @@ public:
 	// Returns the enum from the cPerson.h file
 	eContainerType getContainerType( void );
 
+	void startPerformanceData( void );
+	void stopPerformanceData( void );
+
 	int getPersonID();
 
 private:
 	static int uniqueID;
 	eContainerType type;
+
+	sPerfData theCallStats;
+	std::chrono::system_clock::time_point start;
+	bool b_runPerformanceData = true;
 };
 
 #endif

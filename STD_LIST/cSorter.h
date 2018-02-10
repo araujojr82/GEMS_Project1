@@ -92,9 +92,8 @@ public:
 				return true;
 			}
 			return false;
-		default:
-			break;
 		}
+		return false;
 	}
 private:
 

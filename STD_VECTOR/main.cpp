@@ -2,9 +2,8 @@
 #include <iostream>
 #include "cSTD_Vector.h"
 
-cSTD_Vector* theSTDVector;
-
-//std::string error;
+cSTD_Vector* theConteiner = new cSTD_Vector();
+int numberOfPeople = 1000;
 
 void printVector( std::vector<sPerson*> &theVector )
 {
@@ -55,81 +54,79 @@ void printPerfData( sPerfData &theData )
 
 int main( int argc, char* argv[] )
 {
-	int numberOfPeople = 10000;
 	sPerfData lastCallData;
 
-	theSTDVector = new cSTD_Vector();
-
-	theSTDVector->LoadDataFilesIntoContainer( "../dist.female.first.txt",
-											  "../dist.male.first.txt",
-											  "../US_LastNames.txt" );
+	theConteiner->LoadDataFilesIntoContainer( "../dist.female.first.txt",
+		"../dist.male.first.txt",
+		"../US_LastNames.txt" );
 
 	std::cout << "Generating " << numberOfPeople << " people..." << std::endl;
-	theSTDVector->GenerateRandomPeople( numberOfPeople );
-	theSTDVector->GetPerformanceFromLastCall( lastCallData );
+	theConteiner->GenerateRandomPeople( numberOfPeople );
+	theConteiner->GetPerformanceFromLastCall( lastCallData );
 	printPerfData( lastCallData );
 	std::cout << std::endl;
 
 	std::vector<sPerson> resultVector;
-	
+
 	// -------------TESTING SORT BEGIN-------------
 	sPerson personToFind;
-	theSTDVector->FindPeopleByName( resultVector, personToFind, theSTDVector->theVector.size() );
-	theSTDVector->GetPerformanceFromLastCall( lastCallData );
+	theConteiner->FindPeopleByName( resultVector, personToFind, numberOfPeople );
+	theConteiner->GetPerformanceFromLastCall( lastCallData );
 	std::cout << "Loading Everyone " << std::endl;
 	printPerfData( lastCallData );
 	std::cout << std::endl;
 
-	theSTDVector->SortPeople( resultVector, iPersonMotron::DESC_BY_ID );
-	//printVector( resultVector );
-	theSTDVector->GetPerformanceFromLastCall( lastCallData );
+	theConteiner->SortPeople( resultVector, iPersonMotron::DESC_BY_ID );
+	printVector( resultVector );
+	theConteiner->GetPerformanceFromLastCall( lastCallData );
 	printPerfData( lastCallData );
 	std::cout << std::endl;
 
 	std::cout << "ASC_FIRST_THEN_LAST" << std::endl;
-	theSTDVector->SortPeople( resultVector, iPersonMotron::ASC_FIRST_THEN_LAST );
-	//printVector( resultVector );
-	theSTDVector->GetPerformanceFromLastCall( lastCallData );
+	theConteiner->SortPeople( resultVector, iPersonMotron::ASC_FIRST_THEN_LAST );
+	printVector( resultVector );
+	theConteiner->GetPerformanceFromLastCall( lastCallData );
 	printPerfData( lastCallData );
 	std::cout << std::endl;
-	
-	theSTDVector->SortPeople( resultVector, iPersonMotron::DESC_FIRST_THEN_LAST );
-	//printVector( resultVector );
-	theSTDVector->GetPerformanceFromLastCall( lastCallData );
+
+	theConteiner->SortPeople( resultVector, iPersonMotron::DESC_FIRST_THEN_LAST );
+	printVector( resultVector );
+	theConteiner->GetPerformanceFromLastCall( lastCallData );
 	printPerfData( lastCallData );
 	std::cout << std::endl;
 
 	std::cout << "ASC_LAST_THEN_FIRST" << std::endl;
-	theSTDVector->SortPeople( resultVector, iPersonMotron::ASC_LAST_THEN_FIRST );
-	//printVector( resultVector );
-	theSTDVector->GetPerformanceFromLastCall( lastCallData );
+	theConteiner->SortPeople( resultVector, iPersonMotron::ASC_LAST_THEN_FIRST );
+	printVector( resultVector );
+	theConteiner->GetPerformanceFromLastCall( lastCallData );
 	printPerfData( lastCallData );
 	std::cout << std::endl;
 
-	theSTDVector->SortPeople( resultVector, iPersonMotron::DESC_LAST_THEN_FIRST );
-	//printVector( resultVector );
-	theSTDVector->GetPerformanceFromLastCall( lastCallData );
-	printPerfData( lastCallData );
-	std::cout << std::endl;
-
-	std::cout << "ASC_BY_HEALTH" << std::endl;
-	theSTDVector->SortPeople( resultVector, iPersonMotron::ASC_BY_HEALTH );
-	//printVector( resultVector );
-	theSTDVector->GetPerformanceFromLastCall( lastCallData );
+	std::cout << "DESC_LAST_THEN_FIRST" << std::endl;
+	theConteiner->SortPeople( resultVector, iPersonMotron::DESC_LAST_THEN_FIRST );
+	printVector( resultVector );
+	theConteiner->GetPerformanceFromLastCall( lastCallData );
 	printPerfData( lastCallData );
 	std::cout << std::endl;
 
 	std::cout << "ASC_BY_HEALTH" << std::endl;
-	theSTDVector->SortPeople( resultVector, iPersonMotron::DESC_BY_HEALTH );
-	//printVector( resultVector );
-	theSTDVector->GetPerformanceFromLastCall( lastCallData );
+	theConteiner->SortPeople( resultVector, iPersonMotron::ASC_BY_HEALTH );
+	printVector( resultVector );
+	theConteiner->GetPerformanceFromLastCall( lastCallData );
 	printPerfData( lastCallData );
 	std::cout << std::endl;
 
-	std::cout << "DESC_BY_ID" << std::endl;
-	theSTDVector->SortPeople( resultVector, iPersonMotron::DESC_BY_ID );
-	//printVector( resultVector );
-	theSTDVector->GetPerformanceFromLastCall( lastCallData );
+	std::cout << "DESC_BY_HEALTH" << std::endl;
+	theConteiner->SortPeople( resultVector, iPersonMotron::DESC_BY_HEALTH );
+	printVector( resultVector );
+	theConteiner->GetPerformanceFromLastCall( lastCallData );
+	printPerfData( lastCallData );
+	std::cout << std::endl;
+
+	std::cout << "ASC_BY_ID" << std::endl;
+	theConteiner->SortPeople( resultVector, iPersonMotron::ASC_BY_ID );
+	printVector( resultVector );
+	theConteiner->GetPerformanceFromLastCall( lastCallData );
 	printPerfData( lastCallData );
 	std::cout << std::endl;
 	// -------------TESTING SORT END-------------
@@ -141,93 +138,134 @@ int main( int argc, char* argv[] )
 
 	//sPerson personToFind;
 	personToFind.first = "JOHN";
-	theSTDVector->FindPeopleByName( resultVector, personToFind, theSTDVector->theVector.size() );
+	theConteiner->FindPeopleByName( resultVector, personToFind, numberOfPeople );
 	std::cout << "Number of " << personToFind.first << ": " << resultVector.size() << std::endl;
 	vecPeople.push_back( personToFind );
 	if( resultVector.size() > 0 ) printVector( resultVector );
 	resultVector.clear();
-	theSTDVector->GetPerformanceFromLastCall( lastCallData );
+	theConteiner->GetPerformanceFromLastCall( lastCallData );
 	printPerfData( lastCallData );
 	std::cout << std::endl;
 
 	personToFind.first = "JAMES";
-	theSTDVector->FindPeopleByName( resultVector, personToFind, theSTDVector->theVector.size() );
+	theConteiner->FindPeopleByName( resultVector, personToFind, numberOfPeople );
 	std::cout << "Number of " << personToFind.first << ": " << resultVector.size() << std::endl;
 	vecPeople.push_back( personToFind );
 	if( resultVector.size() > 0 ) printVector( resultVector );
 	resultVector.clear();
-	theSTDVector->GetPerformanceFromLastCall( lastCallData );
+	theConteiner->GetPerformanceFromLastCall( lastCallData );
 	printPerfData( lastCallData );
 	std::cout << std::endl;
-	
+
 	personToFind.first = "ROBERT";
-	theSTDVector->FindPeopleByName( resultVector, personToFind, theSTDVector->theVector.size() );
+	theConteiner->FindPeopleByName( resultVector, personToFind, numberOfPeople );
 	std::cout << "Number of " << personToFind.first << ": " << resultVector.size() << std::endl;
 	vecPeople.push_back( personToFind );
 	if( resultVector.size() > 0 ) printVector( resultVector );
 	resultVector.clear();
-	theSTDVector->GetPerformanceFromLastCall( lastCallData );
+	theConteiner->GetPerformanceFromLastCall( lastCallData );
 	printPerfData( lastCallData );
 	std::cout << std::endl;
 
 	personToFind.first = "MICHAEL";
-	theSTDVector->FindPeopleByName( resultVector, personToFind, theSTDVector->theVector.size() );
+	theConteiner->FindPeopleByName( resultVector, personToFind, numberOfPeople );
 	std::cout << "Number of " << personToFind.first << ": " << resultVector.size() << std::endl;
 	vecPeople.push_back( personToFind );
 	if( resultVector.size() > 0 ) printVector( resultVector );
 	resultVector.clear();
-	theSTDVector->GetPerformanceFromLastCall( lastCallData );
+	theConteiner->GetPerformanceFromLastCall( lastCallData );
 	printPerfData( lastCallData );
 	std::cout << std::endl;
 
 	personToFind.first = "WILLIAM";
-	theSTDVector->FindPeopleByName( resultVector, personToFind, theSTDVector->theVector.size() );
+	theConteiner->FindPeopleByName( resultVector, personToFind, numberOfPeople );
 	std::cout << "Number of " << personToFind.first << ": " << resultVector.size() << std::endl;
 	vecPeople.push_back( personToFind );
 	if( resultVector.size() > 0 ) printVector( resultVector );
 	resultVector.clear();
-	theSTDVector->GetPerformanceFromLastCall( lastCallData );
+	theConteiner->GetPerformanceFromLastCall( lastCallData );
 	printPerfData( lastCallData );
 	std::cout << std::endl;
 
-	//theSTDVector->FindPeopleByName( resultVector, vecPeople, 3 );
-	theSTDVector->FindPeopleByName( resultVector, vecPeople, theSTDVector->theVector.size() );
+	//theConteiner->FindPeopleByName( resultVector, vecPeople, 3 );
+	theConteiner->FindPeopleByName( resultVector, vecPeople, numberOfPeople );
 	std::cout << "Number of People with one of those names: " << resultVector.size() << std::endl;
 	vecPeople.push_back( personToFind );
 	printVector( resultVector );
-	theSTDVector->GetPerformanceFromLastCall( lastCallData );
+	theConteiner->GetPerformanceFromLastCall( lastCallData );
 	printPerfData( lastCallData );
 	std::cout << std::endl;
 
 	// -------------TESTING FIND BY NAME END-------------
 
 	// -------------TESTING FIND BY POSITION/HEALTH BEGIN-------------
-	theSTDVector->FindPeople( resultVector, 40, 60, theSTDVector->theVector.size() );
-	std::cout << "Number of People in that heath: " << resultVector.size() << std::endl;
+	theConteiner->FindPeople( resultVector, 40, 60, numberOfPeople );
+	std::cout << "Number of People with health between 40 and 60: " << resultVector.size() << std::endl;
 	//printVector( resultVector );
 	resultVector.clear();
-	theSTDVector->GetPerformanceFromLastCall( lastCallData );
+	theConteiner->GetPerformanceFromLastCall( lastCallData );
 	printPerfData( lastCallData );
 	std::cout << std::endl;
 
 	sPoint center;
 	center.x = 50; center.y = 50; center.z = 50;
 
-	theSTDVector->FindPeople( resultVector, center, 20, theSTDVector->theVector.size() );
-	std::cout << "Number of People in that range: " << resultVector.size() << std::endl;
+	theConteiner->FindPeople( resultVector, center, 20, numberOfPeople );
+	std::cout << "Number of People within 20 units range of the center: " << resultVector.size() << std::endl;
 	printVector( resultVector );
 	resultVector.clear();
-	theSTDVector->GetPerformanceFromLastCall( lastCallData );
+	theConteiner->GetPerformanceFromLastCall( lastCallData );
 	printPerfData( lastCallData );
 	std::cout << std::endl;
 
-	theSTDVector->FindPeople( resultVector, center, 20, 40, 60, theSTDVector->theVector.size() );
-	std::cout << "Number of People in that range with that health: " << resultVector.size() << std::endl;
+	theConteiner->FindPeople( resultVector, center, 20, 40, 60, numberOfPeople );
+	std::cout << "Number of People in that range with that health range: " << resultVector.size() << std::endl;
 	printVector( resultVector );
 	resultVector.clear();
-	theSTDVector->GetPerformanceFromLastCall( lastCallData );
+	theConteiner->GetPerformanceFromLastCall( lastCallData );
 	printPerfData( lastCallData );
+	std::cout << std::endl;
 
 	// -------------TESTING FIND BY POSITION/HEALTH END-------------
+
+	// -------------TESTING FIND BY ID BEGIN-------------
+	sPerson aPerson;
+	int ID = 1;					// First person
+	if( theConteiner->FindPersonByID( aPerson, ID ) )
+		std::cout << "Person with ID: " << ID << " found!" << std::endl;
+	else
+		std::cout << "Person with ID: " << ID << " not found!" << std::endl;
+	theConteiner->GetPerformanceFromLastCall( lastCallData );
+	printPerfData( lastCallData );
+	std::cout << std::endl;
+
+	ID = numberOfPeople;	// Last person
+	if( theConteiner->FindPersonByID( aPerson, ID ) )
+		std::cout << "Person with ID: " << ID << " found!" << std::endl;
+	else
+		std::cout << "Person with ID: " << ID << " not found!" << std::endl;
+	theConteiner->GetPerformanceFromLastCall( lastCallData );
+	printPerfData( lastCallData );
+	std::cout << std::endl;
+
+	ID = numberOfPeople / 3;	// a "random" person
+	if( theConteiner->FindPersonByID( aPerson, ID ) )
+		std::cout << "Person with ID: " << ID << " found!" << std::endl;
+	else
+		std::cout << "Person with ID: " << ID << " not found!" << std::endl;
+	theConteiner->GetPerformanceFromLastCall( lastCallData );
+	printPerfData( lastCallData );
+	std::cout << std::endl;
+
+	ID = numberOfPeople + 10;	// OFF RANGE
+	if( theConteiner->FindPersonByID( aPerson, ID ) )
+		std::cout << "Person with ID: " << ID << " found!" << std::endl;
+	else
+		std::cout << "Person with ID: " << ID << " not found!" << std::endl;
+	theConteiner->GetPerformanceFromLastCall( lastCallData );
+	printPerfData( lastCallData );
+	std::cout << std::endl;
+
+	// -------------TESTING FIND BY ID END-------------
 	return 0;
 }

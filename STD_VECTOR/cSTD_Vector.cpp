@@ -13,13 +13,6 @@ cSTD_Vector::cSTD_Vector()
 {
 	this->type = STD_VECTOR;
 	//this->uniqueID = 0;
-
-	// Initialize the rand() with a time seed
-	time_t curTime;
-	time( &curTime );
-
-	// Using time as seed for random generation
-	srand( (int)curTime );
 }
 
 cSTD_Vector::~cSTD_Vector()
@@ -184,7 +177,6 @@ bool cSTD_Vector::FindPeopleByName( std::vector<sPerson> &vecPeople, std::vector
 {
 	startPerformanceData();
 	b_runPerformanceData = false;
-	//sPerfData tempCallStats = this->theCallStats;
 
 	std::vector<sPerson> tempVec;
 	int currentMax;
@@ -202,12 +194,11 @@ bool cSTD_Vector::FindPeopleByName( std::vector<sPerson> &vecPeople, std::vector
 			{
 				vecPeople.push_back( tempVec[j] );
 			}
-			currentMax -= tempVec.size();
+			currentMax -= ( int )tempVec.size();
 		}
 		//if( vecPeople.size() == maxNumberOfPeople ) break;	// STOP ADDING PEOPLE WHEN REACHES MAX
 	}
 	
-	//this->theCallStats = tempCallStats;
 	stopPerformanceData();
 	b_runPerformanceData = true;
 
@@ -378,7 +369,7 @@ void cSTD_Vector::stopPerformanceData()
 
 	std::chrono::duration<double> diff = done - this->start;
 
-	this->theCallStats.elapsedCallTime_ms =
+	this->theCallStats.elapsedCallTime_ms = ( float )
 		std::chrono::duration_cast< std::chrono::milliseconds >( diff ).count();	
 
 	uint64_t currentUsedRAM( 0 );
@@ -387,13 +378,12 @@ void cSTD_Vector::stopPerformanceData()
 	GetProcessMemoryInfo( GetCurrentProcess(), &info, sizeof( info ) );
 	currentUsedRAM = info.WorkingSetSize;
 
-	this->theCallStats.memoryUsageBytes_max = currentUsedRAM;
+	this->theCallStats.memoryUsageBytes_max = ( float )currentUsedRAM;
 	this->theCallStats.memoryUsageBytes_avg = ( this->theCallStats.memoryUsageBytes_max +
 		this->theCallStats.memoryUsageBytes_max ) / 2;
 
 	return;
 }
-
 
 // Returns the enum from the cPerson.h file
 eContainerType cSTD_Vector::getContainerType( void )
