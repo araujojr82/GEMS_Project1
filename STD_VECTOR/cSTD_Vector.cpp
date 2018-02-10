@@ -31,6 +31,8 @@ bool cSTD_Vector::LoadDataFilesIntoContainer( std::string firstNameFemaleFileNam
 											  std::string firstNameMaleFileName,
 											  std::string lastNameFileName )
 {
+	startPerformanceData();
+
 	vecFemaleNames.clear();
 	vecMaleNames.clear();
 	vecLastNames.clear();
@@ -88,6 +90,7 @@ bool cSTD_Vector::LoadDataFilesIntoContainer( std::string firstNameFemaleFileNam
 			lastNameFile >> garbage >> garbage >> garbage;
 		}
 	}
+	stopPerformanceData();
 	return true;
 }
 
@@ -104,16 +107,8 @@ int cSTD_Vector::getPersonID()
 // Unique IDs must be unique								 
 bool cSTD_Vector::GenerateRandomPeople( int numberOfPeople )
 {
-	time_t curTime;
-	time( &curTime );
-	std::cout << "Time Begin: " << ( size_t )curTime << std::endl;
-
-	PROCESS_MEMORY_COUNTERS info;
-	GetProcessMemoryInfo( GetCurrentProcess(), &info, sizeof( info ) );
-
-	std::cout << "Memory Begin: " << ( size_t )info.PeakWorkingSetSize << std::endl;
-
-
+	startPerformanceData();
+	
 	for( int i = 0; i != numberOfPeople; i++ )
 	{
 		sPerson* newPerson = new sPerson();
@@ -126,17 +121,8 @@ bool cSTD_Vector::GenerateRandomPeople( int numberOfPeople )
 
 		this->theVector.push_back( newPerson );
 	}
-
-	time_t curTime2;
-	time( &curTime2 );
-	std::cout << "Time Begin: " << ( size_t )curTime2 << std::endl;
-	std::cout << "Time Spent: " << ( size_t )(curTime2 - curTime) << std::endl;
-
-	PROCESS_MEMORY_COUNTERS info_end;
-	GetProcessMemoryInfo( GetCurrentProcess(), &info_end, sizeof( info_end ) );
-
-	std::cout << "Memory End: " << ( size_t )info_end.PeakWorkingSetSize << std::endl;
-	std::cout << "Memory Used: " << ( ( size_t )info_end.PeakWorkingSetSize - ( size_t )info.PeakWorkingSetSize ) << std::endl;
+	
+	stopPerformanceData();
 
 	return true;
 }
@@ -149,6 +135,7 @@ bool cSTD_Vector::GenerateRandomPeople( int numberOfPeople )
 // - if both names are blank, return everyone
 bool cSTD_Vector::FindPeopleByName( std::vector<sPerson> &vecPeople, sPerson personToMatch, int maxNumberOfPeople )
 {
+	if( b_runPerformanceData ) startPerformanceData();
 
 	for( int i = 0; i != this->theVector.size(); i++ )
 	{
@@ -186,13 +173,19 @@ bool cSTD_Vector::FindPeopleByName( std::vector<sPerson> &vecPeople, sPerson per
 		}				
 		if( vecPeople.size() == maxNumberOfPeople ) break;	// STOP ADDING PEOPLE WHEN REACHES MAX
 	}
-	if( vecPeople.size() != 0 ) return true;
+	
+	if( b_runPerformanceData ) stopPerformanceData();
 
+	if( vecPeople.size() != 0 ) return true;
 	return false;
 }
 
 bool cSTD_Vector::FindPeopleByName( std::vector<sPerson> &vecPeople, std::vector<sPerson> &vecPeopleToMatch, int maxNumberOfPeople )
 {
+	startPerformanceData();
+	b_runPerformanceData = false;
+	//sPerfData tempCallStats = this->theCallStats;
+
 	std::vector<sPerson> tempVec;
 	int currentMax;
 
@@ -214,22 +207,29 @@ bool cSTD_Vector::FindPeopleByName( std::vector<sPerson> &vecPeople, std::vector
 		//if( vecPeople.size() == maxNumberOfPeople ) break;	// STOP ADDING PEOPLE WHEN REACHES MAX
 	}
 	
-	if( vecPeople.size() != 0 ) return true;
-	
+	//this->theCallStats = tempCallStats;
+	stopPerformanceData();
+	b_runPerformanceData = true;
+
+	if( vecPeople.size() != 0 ) return true;	
 	return false;
 }
 
 // Returns false if not found.
 bool cSTD_Vector::FindPersonByID( sPerson &person, unsigned long long uniqueID )
 {
+	startPerformanceData();
+
 	for( int i = 0; i != this->theVector.size(); i++ )
 	{
 		if( this->theVector[i]->uniqueID == uniqueID )
 		{
 			person = *this->theVector[i];
+			stopPerformanceData();
 			return true;
 		}
 	}
+	stopPerformanceData();
 
 	return false;
 }
@@ -251,8 +251,10 @@ float distanceAB( sPoint A, sPoint B )
 // Finds the closest people (could be zero), from a point and radius. 
 // Assume that location is "less than or equal" to radius
 bool cSTD_Vector::FindPeople( std::vector<sPerson> &vecPeople, sPoint location, float radius,
-	int maxPeopleToReturn )
+	int maxPeopleToReturn )	
 {
+	startPerformanceData();
+
 	for( int i = 0; i != this->theVector.size(); i++ )
 	{
 		//float distance = distanceAB( this->theVector[i]->location, location );
@@ -262,15 +264,19 @@ bool cSTD_Vector::FindPeople( std::vector<sPerson> &vecPeople, sPoint location, 
 		}
 		if( vecPeople.size() == maxPeopleToReturn ) break;	// STOP ADDING PEOPLE WHEN REACHES MAX
 	}
-	if( vecPeople.size() != 0 ) return true;
 
+	stopPerformanceData();
+
+	if( vecPeople.size() != 0 ) return true;
 	return false;
 }
 
 // Finds people with a cetain health range (inclusive of the min and max values)
 bool cSTD_Vector::FindPeople( std::vector<sPerson> &vecPeople, float minHealth, float maxHealth,
-	int maxPeopleToReturn )
+	int maxPeopleToReturn )	
 {
+	startPerformanceData();
+
 	for( int i = 0; i != this->theVector.size(); i++ )
 	{
 		if( this->theVector[i]->health >= minHealth && 
@@ -280,6 +286,9 @@ bool cSTD_Vector::FindPeople( std::vector<sPerson> &vecPeople, float minHealth, 
 		}
 		if( vecPeople.size() == maxPeopleToReturn ) break;	// STOP ADDING PEOPLE WHEN REACHES MAX
 	}
+
+	stopPerformanceData();
+
 	if( vecPeople.size() != 0 ) return true;
 	return false;
 }
@@ -290,6 +299,8 @@ bool cSTD_Vector::FindPeople( std::vector<sPerson> &vecPeople,
 	float minHealth, float maxHealth,
 	int maxPeopleToReturn )
 {
+	startPerformanceData();
+
 	for( int i = 0; i != this->theVector.size(); i++ )
 	{
 		if( ( this->theVector[i]->health >= minHealth && 
@@ -301,6 +312,9 @@ bool cSTD_Vector::FindPeople( std::vector<sPerson> &vecPeople,
 		
 		if( vecPeople.size() == maxPeopleToReturn ) break;	// STOP ADDING PEOPLE WHEN REACHES MAX
 	}
+	
+	stopPerformanceData();
+
 	if( vecPeople.size() != 0 ) return true;
 	return false;
 }
@@ -309,6 +323,8 @@ bool cSTD_Vector::FindPeople( std::vector<sPerson> &vecPeople,
 // - this is from the data loaded by LoadDataFilesIntoContainer()
 bool cSTD_Vector::SortPeople( std::vector<sPerson> &vecPeople, eSortType sortType )
 {
+	startPerformanceData();
+
 	vecPeople.clear();
 
 	if( this->theVector.size() != 0 )
@@ -320,9 +336,12 @@ bool cSTD_Vector::SortPeople( std::vector<sPerson> &vecPeople, eSortType sortTyp
 		{
 			vecPeople.push_back( *this->theVector[i] );
 		}		
+
+		stopPerformanceData();
 		return true;
 	}	
 
+	stopPerformanceData();
 	return false;
 }
 
@@ -331,7 +350,48 @@ bool cSTD_Vector::SortPeople( std::vector<sPerson> &vecPeople, eSortType sortTyp
 // Measuring starts from when call is made to just before it returns.
 bool cSTD_Vector::GetPerformanceFromLastCall( sPerfData &callStats )
 {
-	return false;
+	callStats = this->theCallStats;
+	return true;
+}
+
+void cSTD_Vector::startPerformanceData( void )
+{
+	this->theCallStats = sPerfData();
+	this->start = std::chrono::system_clock::time_point();
+	this->start = std::chrono::system_clock::now();
+
+	uint64_t currentUsedRAM( 0 );
+
+	PROCESS_MEMORY_COUNTERS info;
+	GetProcessMemoryInfo( GetCurrentProcess(), &info, sizeof( info ) );
+	currentUsedRAM = info.WorkingSetSize;
+
+	this->theCallStats.memoryUsageBytes_min = ( float )currentUsedRAM;
+
+	return;
+}
+
+void cSTD_Vector::stopPerformanceData()
+{
+	std::chrono::system_clock::time_point done;
+	done = std::chrono::system_clock::now();
+
+	std::chrono::duration<double> diff = done - this->start;
+
+	this->theCallStats.elapsedCallTime_ms =
+		std::chrono::duration_cast< std::chrono::milliseconds >( diff ).count();	
+
+	uint64_t currentUsedRAM( 0 );
+
+	PROCESS_MEMORY_COUNTERS info;
+	GetProcessMemoryInfo( GetCurrentProcess(), &info, sizeof( info ) );
+	currentUsedRAM = info.WorkingSetSize;
+
+	this->theCallStats.memoryUsageBytes_max = currentUsedRAM;
+	this->theCallStats.memoryUsageBytes_avg = ( this->theCallStats.memoryUsageBytes_max +
+		this->theCallStats.memoryUsageBytes_max ) / 2;
+
+	return;
 }
 
 

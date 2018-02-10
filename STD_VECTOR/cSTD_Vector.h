@@ -12,6 +12,8 @@
 #include "iPersonMotron.h"
 #include "cSorter.h"		//	<-- Functor 
 
+#include <numeric>
+#include <chrono>
 
 class cSTD_Vector : iPersonMotron
 {
@@ -57,11 +59,18 @@ public:
 	// Returns the enum from the cPerson.h file
 	eContainerType getContainerType( void );
 
+	void startPerformanceData( void );
+	void stopPerformanceData( void );
+
 	int getPersonID();
 
 private:
 	static int uniqueID;
 	eContainerType type;
+
+	sPerfData theCallStats;
+	std::chrono::system_clock::time_point start;
+	bool b_runPerformanceData = true;
 };
 
 #endif
